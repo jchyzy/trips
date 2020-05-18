@@ -29,7 +29,7 @@ public class Trip implements Serializable {
         this.name = name;
         this.from = from;
         this.to = to;
-        this.participants = participants;
+        setParticipants(participants);
     }
 
     public String getParticipants() {

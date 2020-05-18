@@ -44,6 +44,9 @@
                     </div>
 
                 </p>
+                <form th:action="@{/trips/{tripName}/edit(tripName=${trip.name})}">
+                    <input type="submit" value="Edit" class="btn btn-light">
+                </form>
 
             </div>
 

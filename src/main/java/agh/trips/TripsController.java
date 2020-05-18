@@ -79,4 +79,18 @@ public class TripsController {
         return "trip";
     }
 
+    @GetMapping("/trips/{tripName}/edit")
+    public String getTripEditing(@PathVariable String tripName, Model model){
+        Trip trip = getTripForName(tripName);
+        model.addAttribute("trip", trip);
+        model.addAttribute("user", user);
+        return "edit-trip";
+    }
+
+    @PostMapping("/trips/{tripName}/edit")
+    public String editTrip(@PathVariable String tripName, @ModelAttribute Trip trip){
+        restTemplate.postForObject(SERVER_ADDRESS + "/editTrip?user=" + user + "&tripName=" + tripName, trip, Trip.class);
+        return "redirect:/trips";
+    }
+
 }

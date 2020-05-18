@@ -19,4 +19,9 @@ public class ServerMockController {
         database.addTrip(user, trip);
     }
 
+    @RequestMapping(value = "/editTrip", method = RequestMethod.POST)
+    public void editTrip(@RequestParam String user, @RequestParam String tripName, @RequestBody Trip trip){
+        database.editTrip(user, tripName, trip);
+    }
+
 }

@@ -10,8 +10,8 @@ public class DatabaseMock {
 
     public DatabaseMock(){
         trips.put("ala", new LinkedList<>(Arrays.asList(
-                new Trip("Paris 2020", new Date(), new Date(), ""),
-                new Trip("RPA 2021", new Date(), new Date(), ""))));
+                new Trip("Paris 2020", new Date(), new Date(), "ala"),
+                new Trip("RPA 2021", new Date(), new Date(), "ala"))));
     }
 
     public List<Trip> getTrips(String user){
@@ -25,6 +25,21 @@ public class DatabaseMock {
         }
         trips.add(trip);
         this.trips.put(user, trips);
+    }
+
+    private Trip getTripForName(List<Trip> trips, String tripName){
+        for(Trip trip : trips){
+            if(trip.getName().equals(tripName)){
+                return trip;
+            }
+        }
+        return null;
+    }
+
+    public void editTrip(String user, String tripName, Trip trip){
+        List<Trip> userTrips = trips.get(user);
+        userTrips.remove(getTripForName(userTrips, tripName));
+        userTrips.add(trip);
     }
 
 }
