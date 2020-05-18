@@ -10,14 +10,8 @@ public class ServerMockController {
     private DatabaseMock database = new DatabaseMock();
 
     @GetMapping("/getTrips")
-    public List<Trip> getTrips(@RequestParam(value = "user", required = false, defaultValue = "bob") String user){
+    public List<Trip> getTrips(@RequestParam(value = "user") String user){
         return database.getTrips(user);
-    }
-
-    @GetMapping("/getTrip")
-    public List<Trip> getTrip(@RequestParam(value = "user") String user,
-                              @RequestBody Trip trip){
-        return database.getTrip(user, trip);
     }
 
     @RequestMapping(value = "/addTrip", method = RequestMethod.POST)

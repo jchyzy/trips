@@ -5,6 +5,9 @@ import java.util.*;
 public class DatabaseMock {
     private Map<String, List<Trip>> trips = new HashMap<>();
 
+    /* This is just a mock and do not work properly in all cases. It rather should be List<Trip>
+    and more sophisticated method for getTrips. */
+
     public DatabaseMock(){
         trips.put("ala", new LinkedList<>(Arrays.asList(
                 new Trip("Paris 2020", new Date(), new Date(), ""),
@@ -12,10 +15,6 @@ public class DatabaseMock {
     }
 
     public List<Trip> getTrips(String user){
-        return trips.get(user);
-    }
-
-    public List<Trip> getTrip(String user, Trip trip){
         return trips.get(user);
     }
 

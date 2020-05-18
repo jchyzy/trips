@@ -38,7 +38,12 @@ public class Trip implements Serializable {
 
     public void setParticipants(String participants) {
         this.participants = participants;
-        this.participantsList = new ArrayList<>(Arrays.asList(participants.split("\\s*,\\s*")));
+        if(participants.equals("")){
+            this.participantsList = new ArrayList<>();
+        }
+        else {
+            this.participantsList = new ArrayList<>(Arrays.asList(participants.split("\\s*,\\s*")));
+        }
     }
 
     public List<String> getParticipantsList() {

@@ -26,8 +26,12 @@ public class TripsController {
         if(tripsArray != null) {
             trips = Arrays.asList(tripsArray);
         }
+        else{
+            trips = new LinkedList<>();
+        }
 
         model.addAttribute("trips", trips);
+        model.addAttribute("user", user);
 
         return "trips";
     }
@@ -39,7 +43,7 @@ public class TripsController {
             participants = new LinkedList<>();
         }
         if(!participants.contains(user)) {
-            participants.add(user);
+            participants.add(0, user);
         }
         trip.setParticipantsList(participants);
         restTemplate.postForObject(SERVER_ADDRESS + "/addTrip?user=" + user, trip, Trip.class);
@@ -71,6 +75,7 @@ public class TripsController {
     public String getTrip(@PathVariable String tripName, Model model){
         Trip trip = getTripForName(tripName);
         model.addAttribute("trip", trip);
+        model.addAttribute("user", user);
         return "trip";
     }
 
