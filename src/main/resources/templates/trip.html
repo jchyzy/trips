@@ -21,48 +21,50 @@
             </li>
         </ul>
     </nav>
-    <div class="row p-4">
-        <div class="col p-4">
-            <div th:if="${trip != null}">
-                <h2 th:text="${trip.name}"></h2>
+    <div class="container-fluid">
+        <div class="row p-4">
+            <div class="col p-4">
+                <div th:if="${trip != null}">
+                    <h2 th:text="${trip.name}"></h2>
 
-                <p>
-                    Start date: <span th:text="${#dates.format(trip.from, 'dd-MM-yyyy')}"></span>
-                </p>
+                    <p>
+                        Start date: <span th:text="${#dates.format(trip.from, 'dd-MM-yyyy')}"></span>
+                    </p>
 
-                <p>
-                    End date: <span th:text="${#dates.format(trip.to, 'dd-MM-yyyy')}"></span>
-                </p>
+                    <p>
+                        End date: <span th:text="${#dates.format(trip.to, 'dd-MM-yyyy')}"></span>
+                    </p>
 
-                <p>
-                    Participants:
-                    <div th:if="${trip.participantsList != null && !trip.participantsList.isEmpty()}">
-                        <ul>
-                            <li th:each="user : ${trip.participantsList}" th:text="${user}">
-                            </li>
-                        </ul>
-                    </div>
+                    <p>
+                        Participants:
+                        <div th:if="${trip.participantsList != null && !trip.participantsList.isEmpty()}">
+                            <ul>
+                                <li th:each="user : ${trip.participantsList}" th:text="${user}">
+                                </li>
+                            </ul>
+                        </div>
 
-                </p>
-                <form th:action="@{/trips/{tripName}/edit(tripName=${trip.name})}">
-                    <input type="submit" value="Edit" class="btn btn-light">
+                    </p>
+                    <form th:action="@{/trips/{tripName}/edit(tripName=${trip.name})}">
+                        <input type="submit" value="Edit" class="btn btn-light">
+                    </form>
+
+                </div>
+
+                <div th:if="${trip == null}">
+                    <p>Trip not found</p>
+                </div>
+            </div>
+            <div class="col p-4 border">
+                <h2>Chat</h2>
+                <div class="container border">
+                    <p class="text-center"><em>No messages</em></p>
+                </div>
+                <form action="#" class="form-inline">
+                    <input type="text" required="required" name="message" placeholder="Your message" class="form-control">
+                    <input type="submit" value="Send" class="btn btn-primary">
                 </form>
-
             </div>
-
-            <div th:if="${trip == null}">
-                <p>Trip not found</p>
-            </div>
-        </div>
-        <div class="col p-4 border">
-            <h2>Chat</h2>
-            <div class="container border">
-                <p class="text-center"><em>No messages</em></p>
-            </div>
-            <form action="#" class="form-inline">
-                <input type="text" required="required" name="message" placeholder="Your message" class="form-control">
-                <input type="submit" value="Send" class="btn btn-primary">
-            </form>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
