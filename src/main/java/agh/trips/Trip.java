@@ -1,5 +1,7 @@
 package agh.trips;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.thymeleaf.util.StringUtils;
 
@@ -11,13 +13,24 @@ import java.util.List;
 
 public class Trip implements Serializable {
 
+    @JsonProperty("trip_id")
+    private int id;
+
+    @JsonProperty("trip_name")
     private String name;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonProperty("date_from")
     private Date from;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonProperty("date_to")
     private Date to;
+
+    @JsonProperty("owner")
+    private String owner;
 
     private String participants;
 
@@ -79,6 +92,22 @@ public class Trip implements Serializable {
 
     public void setTo(Date to) {
         this.to = to;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
 }

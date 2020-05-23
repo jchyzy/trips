@@ -45,8 +45,10 @@
                         </div>
 
                     </p>
-                    <form th:action="@{/trips/{tripName}/edit(tripName=${trip.name})}">
-                        <input type="submit" value="Edit" class="btn btn-light">
+
+                    <form>
+                        <input type="submit" value="Edit" formmethod="GET" th:formaction="@{/trips/{tripId}/edit(tripId=${trip.id})}" class="btn btn-light">
+                        <input type="submit" value="Delete" formmethod="POST" th:formaction="@{/trips/{tripId}/delete(tripId=${trip.id})}" class="btn btn-danger">
                     </form>
 
                 </div>

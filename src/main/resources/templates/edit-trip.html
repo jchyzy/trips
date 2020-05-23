@@ -17,7 +17,7 @@
         </ul>
         <ul class="navbar-nav ml-auto">
             <li>
-                <a class="nav-link" href="/"><span class="navbar-text" th:text="${user}"></span> <span class="fa fa-user"></span> Change user</a>
+                <a class="nav-link" href="/login"><span class="navbar-text" th:text="${user}"></span> <span class="fa fa-user"></span> Change user</a>
             </li>
         </ul>
     </nav>
@@ -32,12 +32,12 @@
                 </div>
                 <div class="form-group">
                     <label>Date from<br>
-                        <input type="date" th:field="*{from}" th:value="${trip.from}" class="form-control" >
+                        <input type="date" required="required" th:field="*{from}" th:value="${trip.from}" class="form-control" >
                     </label>
                 </div>
                 <div class="form-group">
                     <label>Date to<br>
-                        <input type="date" th:field="*{to}" th:value="${trip.to}" class="form-control">
+                        <input type="date" required="required" th:field="*{to}" th:value="${trip.to}" class="form-control">
                     </label>
                 </div>
                 <div class="form-group">
@@ -47,7 +47,7 @@
                 </div>
                 <input type="submit" value="Save" class="btn btn-primary">
                 <input type="reset" value="Reset" class="btn">
-                <a th:href="@{/trips/{tripName}(tripName=${trip.name})}" class="btn">Cancel</a>
+                <a th:href="@{/trips/{tripId}(tripId=${trip.id})}" class="btn">Cancel</a>
 
             </form>
         </div>
