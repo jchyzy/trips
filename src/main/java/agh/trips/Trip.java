@@ -1,6 +1,7 @@
 package agh.trips;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.thymeleaf.util.StringUtils;
@@ -32,8 +33,10 @@ public class Trip implements Serializable {
     @JsonProperty("owner")
     private String owner;
 
+    @JsonIgnore
     private String participants;
 
+    @JsonProperty("participants")
     private List<String> participantsList;
 
     public Trip(){}
@@ -43,6 +46,11 @@ public class Trip implements Serializable {
         this.from = from;
         this.to = to;
         setParticipants(participants);
+    }
+
+    public Trip(Trip trip){
+        this(trip.name, trip.from, trip.to, trip.participants);
+        setId(trip.id);
     }
 
     public String getParticipants() {

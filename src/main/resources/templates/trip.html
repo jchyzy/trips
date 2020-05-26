@@ -36,6 +36,11 @@
                     </p>
 
                     <p>
+                        Owner: <span th:text="${trip.owner}"></span>
+
+                    </p>
+
+                    <p>
                         Participants:
                         <div th:if="${trip.participantsList != null && !trip.participantsList.isEmpty()}">
                             <ul>
@@ -46,10 +51,12 @@
 
                     </p>
 
-                    <form>
-                        <input type="submit" value="Edit" formmethod="GET" th:formaction="@{/trips/{tripId}/edit(tripId=${trip.id})}" class="btn btn-light">
-                        <input type="submit" value="Delete" formmethod="POST" th:formaction="@{/trips/{tripId}/delete(tripId=${trip.id})}" class="btn btn-danger">
-                    </form>
+                    <div th:if="${trip.owner == user}">
+                        <form>
+                            <input type="submit" value="Edit" formmethod="GET" th:formaction="@{/trips/{tripId}/edit(tripId=${trip.id})}" class="btn btn-light">
+                            <input type="submit" value="Delete" formmethod="POST" th:formaction="@{/trips/{tripId}/delete(tripId=${trip.id})}" class="btn btn-danger">
+                        </form>
+                    </div>
 
                 </div>
 

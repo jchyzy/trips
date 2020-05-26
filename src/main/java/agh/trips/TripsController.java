@@ -8,6 +8,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.json.simple.JSONObject;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,7 +31,7 @@ public class TripsController {
         model.addAttribute("trip", new Trip());
 
         //Trip[] tripsArray = restTemplate.getForObject(SERVER_ADDRESS + "/getTrips?user=" + user, Trip[].class)
-        Trip[] tripsArray = restTemplate.getForObject(SERVER_ADDRESS + "/api/user/" + user + "/trips", Trip[].class);
+        Trip[] tripsArray = restTemplate.getForObject(SERVER_ADDRESS + "/api/user/" + user + "/all-trips", Trip[].class);
 
         if(tripsArray != null) {
             trips = Arrays.asList(tripsArray);
@@ -46,7 +48,6 @@ public class TripsController {
 
     @PostMapping("/trips")
     public String addTrip(@ModelAttribute Trip trip){
-        List<String> participants = trip.getParticipantsList();
         trip.setOwner(user);
 
         //restTemplate.postForObject(SERVER_ADDRESS + "/addTrip?user=" + user, trip, Trip.class);
@@ -114,15 +115,51 @@ public class TripsController {
 
     @GetMapping("/trips/{tripId}/edit")
     public String getTripEditing(@PathVariable int tripId, Model model){
-        Trip trip = getTripForId(tripId);
+        Trip oldTrip = getTripForId(tripId);
+        if(oldTrip == null) {
+            return "error";
+        }
+        Trip trip = new Trip(oldTrip);
+
+        model.addAttribute("oldTrip", oldTrip);
         model.addAttribute("trip", trip);
         model.addAttribute("user", user);
         return "edit-trip";
     }
 
+    public JSONObject generateJsonForDifferences(Trip oldTrip, Trip trip){
+        JSONObject request = new JSONObject();
+        Format format = new SimpleDateFormat("yyyy-MM-dd");
+
+        if(!oldTrip.getName().equals(trip.getName())){
+            request.put("trip_name", trip.getName());
+        }
+        if(!oldTrip.getFrom().equals(trip.getFrom())){
+            request.put("date_from", format.format(trip.getFrom()));
+        }
+        if(!oldTrip.getTo().equals(trip.getTo())){
+            request.put("date_to", format.format(trip.getTo()));
+        }
+        if(!oldTrip.getParticipantsList().equals(trip.getParticipantsList())){
+            request.put("participants", trip.getParticipantsList());
+        }
+
+        if(!request.isEmpty()){
+            request.put("trip_id", trip.getId());
+            return request;
+        }
+        else{
+            return null;
+        }
+    }
+
     @PostMapping("/trips/{tripId}/edit")
-    public String editTrip(@PathVariable int tripId, @ModelAttribute Trip trip){
-        restTemplate.put(SERVER_ADDRESS +  "/api/user/" + user + "/trip/" + tripId + "/update", trip);
+    public String editTrip(@PathVariable int tripId, @ModelAttribute Trip trip, @ModelAttribute Trip oldTrip){
+        Trip old2Trip = getTripForId(tripId);
+        JSONObject json = generateJsonForDifferences(old2Trip, trip);
+        if(json != null) {
+            restTemplate.put(SERVER_ADDRESS + "/api/user/" + user + "/trip/" + tripId + "/update", json);
+        }
         //restTemplate.postForObject(SERVER_ADDRESS + "/editTrip?user=" + user + "&tripName=" + tripName, trip, Trip.class);
         return "redirect:/trips";
     }
