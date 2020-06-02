@@ -1,5 +1,6 @@
-package agh.trips;
+package agh.trips.controller;
 
+import agh.trips.model.Trip;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ public class TripsController {
 
     private String user;
     private List<Trip> trips;
+    private String message;
 
     @Value("${server}")
     private String SERVER_ADDRESS;
@@ -51,7 +53,10 @@ public class TripsController {
         trip.setOwner(user);
 
         //restTemplate.postForObject(SERVER_ADDRESS + "/addTrip?user=" + user, trip, Trip.class);
-        restTemplate.postForObject(SERVER_ADDRESS + "/api/user/" + user + "/create-trip", trip, Trip.class);
+        Trip response = restTemplate.postForObject(SERVER_ADDRESS + "/api/user/" + user + "/create-trip", trip, Trip.class);
+        if( response != null ){
+            String queue_name = response.getId()+ user;
+        }
 
         return "redirect:trips";
     }
@@ -125,6 +130,23 @@ public class TripsController {
         model.addAttribute("trip", trip);
         model.addAttribute("user", user);
         return "edit-trip";
+    }
+
+    @GetMapping("/{user}/trip/{tripId}/send")
+    public void sendMessageOnChat(@RequestParam(value = "message") String message, @PathVariable int tripId, @PathVariable String user, Model model){
+        Trip oldTrip = getTripForId(tripId);
+        if(oldTrip == null) {
+//            return "error";
+        }
+        Trip trip = new Trip(oldTrip);
+        System.out.println(tripId);
+        System.out.println("message"+user);
+        System.out.println(message);
+
+        model.addAttribute("oldTrip", oldTrip);
+        model.addAttribute("trip", trip);
+        model.addAttribute("user", user);
+//        return "edit-trip";
     }
 
     public JSONObject generateJsonForDifferences(Trip oldTrip, Trip trip){

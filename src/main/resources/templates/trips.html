@@ -24,11 +24,11 @@
     <div class="container-fluid">
         <div class="row p-4">
             <div class="container col p-4">
-                <div th:if="${trips != null && !trips.isEmpty()}">
+                <div id="userTrip" th:if="${trips != null && !trips.isEmpty()}">
                     <h2>Your trips</h2>
                     <ul class="list-group">
                         <li th:each="trip : ${trips}" class="list-group-item">
-                            <a th:href="@{/trips/{tripId}(tripId=${trip.id})}" th:text="${trip.name}"></a>
+                            <a  th:href="@{/trips/{tripId}(tripId=${trip.id})}" th:text="${trip.name}"></a>
                         </li>
                     </ul>
                 </div>
@@ -76,5 +76,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
             integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
             crossorigin="anonymous"></script>
+
 </body>
 </html>

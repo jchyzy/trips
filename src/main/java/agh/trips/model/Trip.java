@@ -1,4 +1,4 @@
-package agh.trips;
+package agh.trips.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
