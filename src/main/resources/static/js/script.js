@@ -63,9 +63,6 @@ function onMessageReceived(payload) {
     } else {
         messageElement.classList.add('message-data');
 
-        var element = document.createElement('i');
-        messageElement.appendChild(element);
-
         var usernameElement = document.createElement('span');
         var usernameText = document.createTextNode(message.sender);
         usernameElement.appendChild(usernameText);
