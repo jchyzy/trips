@@ -22,17 +22,14 @@ public class TripsController {
     private List<Trip> trips;
     private String message;
 
-    @Value("${server}")
+    @Value("${remote_server}")
     private String SERVER_ADDRESS;
-    //private final String SERVER_ADDRESS = "http://localhost:8080/server";
 
     private RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping("/trips")
     public String getTrips(Model model){
         model.addAttribute("trip", new Trip());
-
-        //Trip[] tripsArray = restTemplate.getForObject(SERVER_ADDRESS + "/getTrips?user=" + user, Trip[].class)
         Trip[] tripsArray = restTemplate.getForObject(SERVER_ADDRESS + "/api/user/" + user + "/all-trips", Trip[].class);
 
         if(tripsArray != null) {
@@ -51,10 +48,7 @@ public class TripsController {
     @PostMapping("/trips")
     public String addTrip(@ModelAttribute Trip trip){
         trip.setOwner(user);
-
-        //restTemplate.postForObject(SERVER_ADDRESS + "/addTrip?user=" + user, trip, Trip.class);
         restTemplate.postForObject(SERVER_ADDRESS + "/api/user/" + user + "/create-trip", trip, Trip.class);
-
         return "redirect:trips";
     }
 
@@ -84,7 +78,6 @@ public class TripsController {
         request.put("username", user);
         request.put("password", password);
         String response = restTemplate.postForObject(SERVER_ADDRESS +  "/api/user/create", request, String.class);
-        //restTemplate.postForObject("/api/user/create", request, String.class);
         this.user = user;
         return "redirect:/trips";
     }
@@ -162,14 +155,12 @@ public class TripsController {
         if(json != null) {
             restTemplate.put(SERVER_ADDRESS + "/api/user/" + user + "/trip/" + tripId + "/update", json);
         }
-        //restTemplate.postForObject(SERVER_ADDRESS + "/editTrip?user=" + user + "&tripName=" + tripName, trip, Trip.class);
         return "redirect:/trips";
     }
 
     @PostMapping("/trips/{tripId}/delete")
     public String deleteTrip(@PathVariable int tripId, @ModelAttribute Trip trip){
         restTemplate.delete(SERVER_ADDRESS +  "/api/user/" + user + "/trip/" + tripId + "/delete", trip);
-        //restTemplate.delete(SERVER_ADDRESS + "/api/user/" + user + "/trip/" + tripName + "/delete");
         return "redirect:/trips";
     }
 
