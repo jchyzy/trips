@@ -29,3 +29,7 @@
 .form-inline {
     margin-top: 0.5em;
 }
+
+#chatArea {
+    height: 20em;
+}
