@@ -55,11 +55,15 @@ function onMessageReceived(payload) {
     var messageElement = document.createElement('li');
 
     if (message.type === 'newUser') {
-        messageElement.classList.add('event-data');
-        message.message = message.sender + ' has joined the chat';
+        if(message.sender !== user){
+            messageElement.classList.add('event-data');
+            message.message = message.sender + ' has joined the chat';
+        }
     } else if (message.type === 'Leave') {
-        messageElement.classList.add('event-data');
-        message.message = message.sender + ' has left the chat';
+        if(message.sender !== user){
+            messageElement.classList.add('event-data');
+            message.message = message.sender + ' has left the chat';
+        }
     } else {
         messageElement.classList.add('message-data');
 
@@ -69,14 +73,16 @@ function onMessageReceived(payload) {
         messageElement.appendChild(usernameElement);
     }
 
-    var textElement = document.createElement('p');
-    var messageText = document.createTextNode(message.message);
-    textElement.appendChild(messageText);
+    if(message.message){
+        var textElement = document.createElement('p');
+        var messageText = document.createTextNode(message.message);
+        textElement.appendChild(messageText);
 
-    messageElement.appendChild(textElement);
+        messageElement.appendChild(textElement);
 
-    document.querySelector('#messageList').appendChild(messageElement);
-    document.querySelector('#messageList').scrollTop = document
-        .querySelector('#messageList').scrollHeight;
+        document.querySelector('#messageList').appendChild(messageElement);
+        document.querySelector('#messageList').scrollTop = document
+            .querySelector('#messageList').scrollHeight;
+    }
 
 }
