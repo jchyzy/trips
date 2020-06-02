@@ -1,0 +1,35 @@
+.message-data {
+    list-style-type: none;
+    margin: 0.5em 0.5em 0.5em 0.5em;
+    padding: 0.5em 0.5em 0.5em 1em;
+    border: 1px solid lightgrey;
+    background: whitesmoke;
+    border-radius: 10px;
+}
+
+.message-data span {
+    font-weight: bold
+}
+
+.message-data p {
+    margin-bottom: 0;
+}
+
+.event-data {
+    list-style-type: none;
+    font-style: italic;
+    margin-left: 0.5em;
+}
+
+#messageList {
+    margin-top: 1em;
+    padding-left: 0;
+}
+
+.form-inline {
+    margin-top: 0.5em;
+}
+
+#chatArea {
+    height: 20em;
+}

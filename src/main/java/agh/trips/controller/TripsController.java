@@ -1,5 +1,6 @@
-package agh.trips;
+package agh.trips.controller;
 
+import agh.trips.model.Trip;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ public class TripsController {
 
     private String user;
     private List<Trip> trips;
+    private String message;
 
     @Value("${server}")
     private String SERVER_ADDRESS;

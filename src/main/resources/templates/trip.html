@@ -7,14 +7,16 @@
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
           crossorigin="anonymous">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/chat.css">
 </head>
 <body>
     <nav class="navbar navbar-dark bg-primary">
         <ul class="navbar-nav">
             <li>
-                <a class="nav-link" href="/trips">Your trips</a>
+                <a id="exitChat" class="nav-link" href="/trips">Your trips</a>
             </li>
         </ul>
+
         <ul class="navbar-nav ml-auto">
             <li>
                 <a class="nav-link" href="/"><span class="navbar-text" th:text="${user}"></span> <span class="fa fa-user"></span> Change user</a>
@@ -64,18 +66,26 @@
                     <p>Trip not found</p>
                 </div>
             </div>
-            <div class="col p-4 border">
+            <div id="chatWindow" class="col p-4 border">
                 <h2>Chat</h2>
-                <div class="container border">
-                    <p class="text-center"><em>No messages</em></p>
+
+                <div id="chatArea" class="container border pre-scrollable">
+                    <ul id="messageList">
+
+                    </ul>
+
                 </div>
                 <form action="#" class="form-inline">
-                    <input type="text" required="required" name="message" placeholder="Your message" class="form-control">
-                    <input type="submit" value="Send" class="btn btn-primary">
+                    <input type="text" required="required" name="message" id="chatMessage" placeholder="Enter a message...." autocomplete="off" class="form-control">
+                    <button type="submit" class="btn btn-primary">Send</button>
                 </form>
             </div>
         </div>
     </div>
+    <script>
+        var user = "[[${user}]]";
+        var trip = "[[${trip.id}]]";
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
             crossorigin="anonymous"></script>
@@ -85,5 +95,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
             integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
             crossorigin="anonymous"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 </html>
