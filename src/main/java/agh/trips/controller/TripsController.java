@@ -1,7 +1,11 @@
 package agh.trips.controller;
 
 import agh.trips.model.Trip;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +13,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.json.simple.JSONObject;
+import org.thymeleaf.util.StringUtils;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -175,5 +180,19 @@ public class TripsController {
         }
         exception.printStackTrace();
         return "error";
+    }
+
+    @Autowired
+    private Environment environment;
+
+    @EventListener({ApplicationReadyEvent.class})
+    public void handleApplicationReadyEvent(){
+        String port = environment.getProperty("local.server.port");
+        if(port != null){
+            String horizontalLine = StringUtils.repeat('-', 70);
+            System.out.println(horizontalLine);
+            System.out.println("You can open this application in the browser: http://localhost:" + port);
+            System.out.println(horizontalLine);
+        }
     }
 }
