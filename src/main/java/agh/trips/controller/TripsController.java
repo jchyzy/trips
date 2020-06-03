@@ -122,7 +122,6 @@ public class TripsController {
         }
         Trip trip = new Trip(oldTrip);
 
-        model.addAttribute("oldTrip", oldTrip);
         model.addAttribute("trip", trip);
         model.addAttribute("user", user);
         return "edit-trip";
@@ -155,9 +154,9 @@ public class TripsController {
     }
 
     @PostMapping("/trips/{tripId}/edit")
-    public String editTrip(@PathVariable int tripId, @ModelAttribute Trip trip, @ModelAttribute Trip oldTrip){
-        Trip old2Trip = getTripForId(tripId);
-        JSONObject json = generateJsonForDifferences(old2Trip, trip);
+    public String editTrip(@PathVariable int tripId, @ModelAttribute Trip trip){
+        Trip oldTrip = getTripForId(tripId);
+        JSONObject json = generateJsonForDifferences(oldTrip, trip);
         if(json != null) {
             restTemplate.put(SERVER_ADDRESS + "/api/user/" + user + "/trip/" + tripId + "/update", json);
         }
