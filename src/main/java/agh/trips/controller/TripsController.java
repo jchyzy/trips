@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.json.simple.JSONObject;
 
@@ -164,4 +165,15 @@ public class TripsController {
         return "redirect:/trips";
     }
 
+    @ExceptionHandler
+    public String handleException(Model model, Exception exception){
+        model.addAttribute("exception", exception);
+
+        if(exception.getClass().equals(ResourceAccessException.class)){
+            String message = "There is a problem with a connection to the server";
+            model.addAttribute("message", message);
+        }
+        exception.printStackTrace();
+        return "error";
+    }
 }
