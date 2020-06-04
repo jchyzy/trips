@@ -9,11 +9,11 @@ To run the application, Java (with environment variable *JAVA_HOME* set) and Rab
 must be installed. You can download and run RabbitMQ Server on your computer with plugins 
 *rabbitmq_mqtt rabbitmq_federation_management rabbitmq_stomp rabbitmq_management* or use Docker 
 container.
-####Downloading project
+#### Downloading project
 ```
 $ git clone https://github.com/jchyzy/trips.git
 ```
-####Using Docker with RabbitMQ servver
+#### Using Docker with RabbitMQ servver
 ###### Creating image with RabbitMQ
 Firstly, you need to have docker image. You can download it from docker-hub or creating with Dockerfie.
 
@@ -37,7 +37,7 @@ To start or stop your container use
 $ docker start rabbitmq-server
 $ docker stop rabbitmq-server
 ```
-#####Run application
+##### Run application
 ```
 $ cd trips
 $ mvnw spring-boot:run
